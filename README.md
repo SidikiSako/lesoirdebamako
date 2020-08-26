@@ -1,6 +1,5 @@
 # nouvel_horizon_app
-
-A new Flutter application.
+Flutter news app using wordpress API.
 
 ## Getting Started
 
