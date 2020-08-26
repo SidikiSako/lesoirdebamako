@@ -1,31 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:nouvel_horizon_app/model/article_model.dart';
+import 'package:nouvel_horizon_app/widget/other_article_layout.dart';
 
-import 'main_article.dart';
-
-class ArticleListWidget extends StatefulWidget {
+class ListOfArticlesPerCategoryID extends StatefulWidget {
   final ScrollController scrollController;
   final List<Article> listArticles;
   final bool hasArticles;
+  ListOfArticlesPerCategoryID(
+      {this.listArticles, this.hasArticles, this.scrollController});
 
-  ArticleListWidget(
-      {this.listArticles, this.scrollController, this.hasArticles});
   @override
-  _ArticleListWidgetState createState() => _ArticleListWidgetState();
+  _ListOfArticlesPerCategoryIDState createState() =>
+      _ListOfArticlesPerCategoryIDState();
 }
 
-class _ArticleListWidgetState extends State<ArticleListWidget> {
-  @override
+class _ListOfArticlesPerCategoryIDState
+    extends State<ListOfArticlesPerCategoryID> {
   Widget build(BuildContext context) {
     return Container(
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(15.0, 0, 15.0, 0),
+        padding: const EdgeInsets.fromLTRB(15.0, 15, 15.0, 15),
         child: ListView.builder(
           controller: widget.scrollController,
           itemCount: widget.listArticles.length + 1,
           itemBuilder: (BuildContext context, int index) {
             if (index < widget.listArticles.length) {
-              return MainArticle(
+              return OtherArticleLayout(
                 article: widget.listArticles[index],
               );
             } else if (widget.hasArticles) {

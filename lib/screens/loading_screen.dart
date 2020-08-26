@@ -77,7 +77,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Text(
-              "LESOIR DE BAMAKO",
+              "LE SOIR DE BAMAKO",
               style: GoogleFonts.permanentMarker(
                 color: Colors.black,
                 fontSize: 25.0,

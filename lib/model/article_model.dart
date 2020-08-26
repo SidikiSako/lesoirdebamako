@@ -4,6 +4,8 @@ class Article {
   final String content;
   final String excerpt;
   final String imageUrl;
+  final String date;
+  final String author;
 
   //String date;
   //String author;
@@ -14,13 +16,16 @@ class Article {
   //   return imageId;
   // }
 
-  Article(
-      {this.title,
-      this.id,
-      this.content,
-      this.excerpt,
-      //this.imageId,
-      this.imageUrl});
+  Article({
+    this.title,
+    this.id,
+    this.content,
+    this.excerpt,
+    //this.imageId,
+    this.imageUrl,
+    this.date,
+    this.author,
+  });
 
   factory Article.fromJson(Map<String, dynamic> json) {
     //print("MEDIA = ${json["_embedded"]["wp:featuredmedia"][0]["source_url"]}");
@@ -30,6 +35,8 @@ class Article {
       content: json["content"]["rendered"],
       excerpt: json["excerpt"]["rendered"],
       imageUrl: json["_embedded"]["wp:featuredmedia"][0]["source_url"],
+      date: json["modified"],
+      author: json["_embedded"]["author"][0]["name"],
     );
   }
 
@@ -42,6 +49,8 @@ class Article {
       content: json["content"]["rendered"],
       excerpt: json["excerpt"]["rendered"],
       imageUrl: null,
+      date: json["modified"],
+      author: json["_embedded"]["author"][0]["name"],
     );
   }
 }

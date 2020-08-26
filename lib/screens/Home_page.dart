@@ -60,87 +60,73 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return articles.length < 10
         ? LoadingScreen()
-        : DefaultTabController(
-            length: 8,
-            child: Scaffold(
-              appBar: AppBar(
-                elevation: 0,
-                backgroundColor: Colors.white,
-                title: Text(
-                  'lesoir de bamako',
-                  style: GoogleFonts.permanentMarker(
+        : Scaffold(
+            appBar: AppBar(
+              elevation: 1,
+              backgroundColor: Colors.white,
+              title: Text(
+                'le soir de bamako ',
+                style: GoogleFonts.permanentMarker(
+                  color: Colors.black,
+                  fontSize: 25.0,
+                ),
+              ),
+            ),
+            body: <Widget>[
+              ArticleListWidget(
+                hasArticles: hasArticles,
+                listArticles: articles,
+                scrollController: _scrollController,
+              ),
+              CategoryList(),
+              SubscribePage(),
+            ][currentIndex],
+            bottomNavigationBar: BubbleBottomBar(
+              opacity: .1,
+              currentIndex: currentIndex,
+              onTap: changePage,
+              borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+              elevation: 8,
+              hasNotch: true, //new
+              hasInk: true, //new, gives a cute ink effect
+              inkColor:
+                  Colors.black12, //optional, uses theme color if not specified
+              items: <BubbleBottomBarItem>[
+                BubbleBottomBarItem(
+                    backgroundColor: Colors.black,
+                    icon: Icon(
+                      Icons.home,
+                      color: Colors.black,
+                    ),
+                    activeIcon: Icon(
+                      Icons.home,
+                      color: Colors.black,
+                    ),
+                    title: Text("Accueil")),
+                BubbleBottomBarItem(
+                  backgroundColor: Colors.black,
+                  icon: Icon(
+                    Icons.dashboard,
                     color: Colors.black,
-                    fontSize: 25.0,
                   ),
+                  activeIcon: Icon(
+                    Icons.dashboard,
+                    color: Colors.black,
+                  ),
+                  title: Text("Categories"),
                 ),
-              ),
-              body: <Widget>[
-                ArticleListWidget(
-                  hasArticles: hasArticles,
-                  listArticles: articles,
-                  scrollController: _scrollController,
-                ),
-                CategoryList(),
-                SavedArticle(),
-                SubscribePage(),
-              ][currentIndex],
-              bottomNavigationBar: BubbleBottomBar(
-                opacity: .1,
-                currentIndex: currentIndex,
-                onTap: changePage,
-                borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-                elevation: 8,
-                hasNotch: true, //new
-                hasInk: true, //new, gives a cute ink effect
-                inkColor: Colors
-                    .black12, //optional, uses theme color if not specified
-                items: <BubbleBottomBarItem>[
-                  BubbleBottomBarItem(
-                      backgroundColor: Colors.black,
-                      icon: Icon(
-                        Icons.home,
-                        color: Colors.black,
-                      ),
-                      activeIcon: Icon(
-                        Icons.home,
-                        color: Colors.black,
-                      ),
-                      title: Text("Accueil")),
-                  BubbleBottomBarItem(
-                      backgroundColor: Colors.black,
-                      icon: Icon(
-                        Icons.dashboard,
-                        color: Colors.black,
-                      ),
-                      activeIcon: Icon(
-                        Icons.dashboard,
-                        color: Colors.black,
-                      ),
-                      title: Text("Categories")),
-                  BubbleBottomBarItem(
-                      backgroundColor: Colors.black,
-                      icon: Icon(
-                        Icons.bookmark_border,
-                        color: Colors.black,
-                      ),
-                      activeIcon: Icon(
-                        Icons.bookmark_border,
-                        color: Colors.black,
-                      ),
-                      title: Text("Enregistré")),
-                  BubbleBottomBarItem(
-                      backgroundColor: Colors.black,
-                      icon: Icon(
-                        Icons.import_contacts,
-                        color: Colors.black,
-                      ),
-                      activeIcon: Icon(
-                        Icons.import_contacts,
-                        color: Colors.black,
-                      ),
-                      title: Text("S'abonner"))
-                ],
-              ),
+                BubbleBottomBarItem(
+                    backgroundColor: Colors.black,
+                    icon: Icon(
+                      Icons.import_contacts,
+                      color: Colors.black,
+                    ),
+                    activeIcon: Icon(
+                      Icons.import_contacts,
+                      color: Colors.black,
+                    ),
+                    title: Text("S'abonner"))
+              ],
             ),
           );
   }
@@ -220,7 +206,7 @@ class _HomePageState extends State<HomePage> {
     List<Article> articleList = new List();
 
     String postUrl =
-        "http://lesoirdebko.ml/wp-json/wp/v2/posts?_embed=wp:featuredmedia&page=${pageNum}&_fields=id,title,excerpt,content,featured_media,_links";
+        "http://lesoirdebko.ml/wp-json/wp/v2/posts?_embed=wp:featuredmedia,author&page=${pageNum}&_fields=id,title,excerpt,content,featured_media,_links,modified";
 
     //premier API call
     http.Response response = await http.get(postUrl);
