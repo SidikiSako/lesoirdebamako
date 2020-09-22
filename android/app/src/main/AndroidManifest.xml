@@ -8,7 +8,7 @@
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="nouvel_horizon_app"
+        android:label="Lesoirdebko"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
